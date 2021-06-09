@@ -6,6 +6,7 @@ using Kogel.Dapper.Extension.MsSql.Extension;
 using System.Text.RegularExpressions;
 using Kogel.Dapper.Extension.Extension;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Kogel.Dapper.Extension
 {
@@ -191,7 +192,7 @@ namespace Kogel.Dapper.Extension
 
         public override SqlProvider FormatUpdate<T>(T entity, string[] excludeFields)
         {
-            var update = ResolveExpression.ResolveUpdates<T>(entity, Params, excludeFields);
+            var update = ResolveExpression.ResolveUpdate(entity, Params, excludeFields);
 
             ProviderOption.IsAsName = false;
 
@@ -201,6 +202,17 @@ namespace Kogel.Dapper.Extension
                 whereSql += GetIdentityWhere(entity, Params);
 
             SqlString = $"UPDATE {FormatTableName(false, false)} {update} {whereSql}";
+            return this;
+        }
+
+        public override SqlProvider FormatUpdate<T>(IEnumerable<T> entites, string[] excludeFields)
+        {
+            var update = ResolveExpression.ResolveBulkUpdate(entites, Params, excludeFields);
+            ProviderOption.IsAsName = false;
+            //批量修改只能用主键作为条件
+            var whereSql = GetIdentityWhere(entites.FirstOrDefault(), Params);
+
+            SqlString = $"UPDATE {FormatTableName(false, false)} {update} WHERE 1=1 {whereSql}";
             return this;
         }
 

@@ -18,7 +18,6 @@ namespace Kogel.Dapper.Extension.Test
     {
         static void Main(string[] args)
         {
-
             #region mssql单元测试
             //var mssqlQuery = new UnitTest.Mssql.Query();
             //mssqlQuery.Test();
