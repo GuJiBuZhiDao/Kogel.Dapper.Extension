@@ -21,18 +21,22 @@ namespace Kogel.Dapper.Extension.Expressions
         /// 字段sql
         /// </summary>
         internal StringBuilder SpliceField { get; set; }
+
         /// <summary>
         /// 参数
         /// </summary>
         protected DynamicParameters Param { get; set; }
+
         /// <summary>
         /// 解析提供方
         /// </summary>
         protected SqlProvider Provider { get; set; }
+
         /// <summary>
         /// 解析第n个下标
         /// </summary>
         protected int Index { get; set; }
+
         /// <summary>
         /// 提供方选项
         /// </summary>
@@ -45,6 +49,7 @@ namespace Kogel.Dapper.Extension.Expressions
             this.Provider = provider;
             this.providerOption = provider.ProviderOption;
         }
+
         /// <summary>
         /// 有+ - * /需要拼接的对象
         /// </summary>
@@ -57,6 +62,7 @@ namespace Kogel.Dapper.Extension.Expressions
             this.Param.AddDynamicParams(binary.Param);
             return node;
         }
+
         /// <summary>
         /// 值对象
         /// </summary>
@@ -73,6 +79,7 @@ namespace Kogel.Dapper.Extension.Expressions
             Param.Add(paramName, nodeValue);
             return node;
         }
+
         /// <summary>
         /// 成员对象
         /// </summary>
@@ -101,8 +108,13 @@ namespace Kogel.Dapper.Extension.Expressions
                     }
                     var member = EntityCache.QueryEntity(node.Expression.Type);
                     string fieldName = member.FieldPairs[node.Member.Name];
-                    string field = $"{member.AsName}.{providerOption.CombineFieldName(fieldName)}";
-                    SpliceField.Append(field);
+                    //字段全称
+                    string fieldStr = Provider.IsAppendAsName ? $"{member.AsName}.{providerOption.CombineFieldName(fieldName)}"
+                        : providerOption.CombineFieldName(member.FieldPairs[node.Member.Name]);
+                    SpliceField.Append(fieldStr);
+
+                    //string field = $"{member.AsName}.{providerOption.CombineFieldName(fieldName)}";
+                    //SpliceField.Append(field);
                 }
                 else
                 {
@@ -145,7 +157,7 @@ namespace Kogel.Dapper.Extension.Expressions
             else if (node.Method.DeclaringType.FullName.Contains("Kogel.Dapper.Extension"))
             {
                 DynamicParameters parameters = new DynamicParameters();
-                SpliceField.Append("(" + node.MethodCallExpressionToSql(ref parameters, Index) + ")");
+                SpliceField.Append($"({node.MethodCallExpressionToSql(ref parameters, Index)})");
                 Param.AddDynamicParams(parameters);
             }
             else
@@ -375,8 +387,6 @@ namespace Kogel.Dapper.Extension.Expressions
             StringBuilder builder = new StringBuilder();
             builder.Append(providerOption.ParameterPrefix);
             if (!string.IsNullOrEmpty(FieldName))
-                //builder.Append(FieldName.Replace(".", "_"));
-                //builder.Append(FieldName.Substring(FieldName.IndexOf(".") + 1));
                 builder.Append("Param");
             builder.Append($"_{Param.ParameterNames.Count()}{Index}");
             return builder.ToString();
@@ -450,7 +460,10 @@ namespace Kogel.Dapper.Extension.Expressions
                     }
                     var member = EntityCache.QueryEntity(node.Expression.Type);
                     this.FieldName = member.FieldPairs[node.Member.Name];
-                    SpliceField.Append($"{member.AsName}.{providerOption.CombineFieldName(member.FieldPairs[node.Member.Name])}");
+                    //字段全称
+                    string fieldStr = Provider.IsAppendAsName ? $"{member.AsName}.{providerOption.CombineFieldName(member.FieldPairs[node.Member.Name])}"
+                        : providerOption.CombineFieldName(member.FieldPairs[node.Member.Name]);
+                    SpliceField.Append(fieldStr);
                     //导航属性允许显示字段
                     if (expTypeName == "System.Linq.Expressions.PropertyExpression")
                     {
