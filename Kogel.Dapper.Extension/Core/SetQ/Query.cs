@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using Kogel.Dapper.Extension.Core.Interfaces;
-using Kogel.Dapper.Extension.Model;
+using Kogel.Dapper.Extension.Entites;
 using Kogel.Dapper.Extension.Extension;
-using Dapper;
+using Kogel.Dapper.Extension;
 
 namespace Kogel.Dapper.Extension.Core.SetQ
 {
@@ -206,6 +206,64 @@ namespace Kogel.Dapper.Extension.Core.SetQ
             else
                 SqlProvider.Context.Set.SelectExpression = falseSelect;
             SqlProvider.FormatToList<T>();
+            return await DbCon.Query_1Async<TReturn>(SqlProvider, DbTransaction);
+        }
+
+        public List<T> Page(int pageIndex, int pageSize)
+        {
+            SqlProvider.FormatToPageList<T>(pageIndex, pageSize);
+            return DbCon.Query_1<T>(SqlProvider, DbTransaction);
+        }
+
+        public List<TSource> Page<TSource>(int pageIndex, int pageSize)
+        {
+            SqlProvider.FormatToPageList<T>(pageIndex, pageSize);
+            return DbCon.Query_1<TSource>(SqlProvider, DbTransaction);
+        }
+
+        public List<TReturn> Page<TReturn>(int pageIndex, int pageSize, Expression<Func<T, TReturn>> select)
+        {
+            SqlProvider.Context.Set.SelectExpression = select;
+            SqlProvider.FormatToPageList<T>(pageIndex, pageSize);
+            return DbCon.Query_1<TReturn>(SqlProvider, DbTransaction);
+        }
+
+        public List<TReturn> Page<TReturn>(int pageIndex, int pageSize, bool where, Expression<Func<T, TReturn>> trueSelect, Expression<Func<T, TReturn>> falseSelect)
+        {
+            if (where)
+                SqlProvider.Context.Set.SelectExpression = trueSelect;
+            else
+                SqlProvider.Context.Set.SelectExpression = falseSelect;
+            SqlProvider.FormatToPageList<T>(pageIndex, pageSize);
+            return DbCon.Query_1<TReturn>(SqlProvider, DbTransaction);
+        }
+
+        public async Task<List<T>> PageAsync(int pageIndex, int pageSize)
+        {
+            SqlProvider.FormatToPageList<T>(pageIndex, pageSize);
+            return await DbCon.Query_1Async<T>(SqlProvider, DbTransaction);
+        }
+
+        public async Task<List<TSource>> PageAsync<TSource>(int pageIndex, int pageSize)
+        {
+            SqlProvider.FormatToPageList<T>(pageIndex, pageSize);
+            return await DbCon.Query_1Async<TSource>(SqlProvider, DbTransaction);
+        }
+
+        public async Task<List<TReturn>> PageAsync<TReturn>(int pageIndex, int pageSize, Expression<Func<T, TReturn>> select)
+        {
+            SqlProvider.Context.Set.SelectExpression = select;
+            SqlProvider.FormatToPageList<T>(pageIndex, pageSize);
+            return await DbCon.Query_1Async<TReturn>(SqlProvider, DbTransaction);
+        }
+
+        public async Task<List<TReturn>> PageAsync<TReturn>(int pageIndex, int pageSize, bool where, Expression<Func<T, TReturn>> trueSelect, Expression<Func<T, TReturn>> falseSelect)
+        {
+            if (where)
+                SqlProvider.Context.Set.SelectExpression = trueSelect;
+            else
+                SqlProvider.Context.Set.SelectExpression = falseSelect;
+            SqlProvider.FormatToPageList<T>(pageIndex, pageSize);
             return await DbCon.Query_1Async<TReturn>(SqlProvider, DbTransaction);
         }
 

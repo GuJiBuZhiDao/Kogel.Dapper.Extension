@@ -1,8 +1,7 @@
-using Dapper;
-using Kogel.Dapper.Extension.Core.Interfaces;
 using Kogel.Dapper.Extension;
+using Kogel.Dapper.Extension.Core.Interfaces;
 using Kogel.Dapper.Extension.Extension;
-using Kogel.Dapper.Extension.Model;
+using Kogel.Dapper.Extension.Entites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -651,9 +650,9 @@ namespace Kogel.Dapper.Extension.Expressions
                     {
                         this.SpliceField.Append("(");
                         Visit(node.Arguments[0]);
-                        this.SpliceField.Append(" IS NULL AND ");
+                        this.SpliceField.Append(" IS NULL OR ");
                         Visit(node.Arguments[0]);
-                        this.SpliceField.Append(" !=''");
+                        this.SpliceField.Append(" =''");
                         this.SpliceField.Append(")");
                     }
                     break;

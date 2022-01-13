@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data;
-using Dapper;
+using Kogel.Dapper.Extension;
 using Kogel.Dapper.Extension.Core.Interfaces;
 using Kogel.Dapper.Extension.Core.SetC;
 using Kogel.Dapper.Extension.Core.SetQ;
-using Kogel.Dapper.Extension.Model;
+using Kogel.Dapper.Extension.Entites;
 using Kogel.Dapper.Extension.Oracle.Extension;
 
 namespace Kogel.Dapper.Extension.Oracle

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Dapper;
+using Kogel.Dapper.Extension;
 using Kogel.Dapper.Extension.Core.Interfaces;
-using Kogel.Dapper.Extension.Model;
+using Kogel.Dapper.Extension.Entites;
 using System.Linq;
 
 namespace Kogel.Dapper.Extension.Core.SetC

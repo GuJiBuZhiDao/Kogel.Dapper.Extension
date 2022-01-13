@@ -1,9 +1,9 @@
-using Dapper;
+using Kogel.Dapper.Extension;
 using Kogel.Dapper.Extension.Attributes;
 using Kogel.Dapper.Extension.Expressions;
 using Kogel.Dapper.Extension.Extension;
 using Kogel.Dapper.Extension.Helper;
-using Kogel.Dapper.Extension.Model;
+using Kogel.Dapper.Extension.Entites;
 using System;
 using System.Collections;
 using System.Collections.Generic;

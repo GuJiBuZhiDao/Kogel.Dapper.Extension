@@ -2,8 +2,8 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Kogel.Dapper.Extension.Model;
-using Dapper;
+using Kogel.Dapper.Extension.Entites;
+using Kogel.Dapper.Extension;
 
 namespace Kogel.Dapper.Extension
 {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Dapper;
+using Kogel.Dapper.Extension;
 
-namespace Kogel.Dapper.Extension.Model
+namespace Kogel.Dapper.Extension.Entites
 {
 	public class JoinAssTable : ICloneable
 	{

@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
+using Kogel.Dapper.Extension;
 using Kogel.Dapper.Extension;
 using Kogel.Dapper.Extension.Helper;
 using Kogel.Repository.Interfaces;
@@ -85,7 +85,7 @@ namespace Kogel.Repository
                     //是否排除在工作单元外
                     if (command.IsExcludeUnitOfWork)
                     {
-                        var connectionFunc = RepositoryOptionsBuilder._connectionPool
+                        var connectionFunc = Global.ConnectionPool
                             .FirstOrDefault(x =>
                                 (x.ConnectionString.Contains(this.Connection.ConnectionString))
                                 || (x.DataSource == dbConnection.DataSource && x.Database == dbConnection.Database)

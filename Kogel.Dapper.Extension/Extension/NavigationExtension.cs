@@ -1,13 +1,13 @@
-﻿using Dapper;
-using Kogel.Dapper.Extension.Model;
+﻿using Kogel.Dapper.Extension;
+using Kogel.Dapper.Extension.Entites;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using static Dapper.SqlMapper;
-using static Dapper.SqlMapperExtension;
+using static Kogel.Dapper.Extension.SqlMapper;
+using static Kogel.Dapper.Extension.SqlMapperExtension;
 
 namespace Kogel.Dapper.Extension.Extension
 {

@@ -16,7 +16,7 @@ namespace Kogel.Repository
     public static class RepositoryExtension
     {
 
-        public class BaseRepositoryExtension<T> : BaseRepository<T>
+        public class BaseRepositoryExtension<T> : BaseRepository<T>, IRepository<T>
         {
             public BaseRepositoryExtension(RepositoryOptionsBuilder options) : base(options)
             {
@@ -130,5 +130,14 @@ namespace Kogel.Repository
             commandSet.SqlProvider.IsExcludeUnitOfWork = true;
             return commandSet;
         }
+    }
+
+    /// <summary>
+    /// 简化仓储名称
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IRepository<T> : IBaseRepository<T>
+    {
+
     }
 }

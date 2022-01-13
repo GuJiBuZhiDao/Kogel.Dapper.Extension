@@ -1,4 +1,4 @@
-﻿using Dapper;
+﻿using Kogel.Dapper.Extension;
 using Kogel.Dapper.Extension.MySql.Extension;
 using Kogel.Dapper.Extension.Test.Model;
 using Kogel.Dapper.Extension.Test.UnitTest.Mysql.Repository;
@@ -11,7 +11,7 @@ using Kogel.Dapper.Extension.Test.Model.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using Kogel.Dapper.Extension.Model;
+using Kogel.Dapper.Extension.Entites;
 
 namespace Kogel.Dapper.Extension.Test.UnitTest.Mysql
 {
@@ -63,12 +63,16 @@ namespace Kogel.Dapper.Extension.Test.UnitTest.Mysql
 
                     var gc_Fps_FlowOrder = repository.QuerySet()
                         .ResetTableName(typeof(FlowOrder), "flow_order_1")
+                        .Page(1, 10);
+
+                    var gc_Fps_FlowOrder1 = repository.QuerySet()
+                        .ResetTableName(typeof(FlowOrder), "flow_order_1")
                         .ResetTableName(typeof(WarehouseOrder), "warehouseorder_1")
                         .Where(x => x.DeliveredTime.HasValue && x.CustomerCode.StartsWith("test"))
                         .Join<FlowOrder, WarehouseOrder>((a, b) => a.OrderNumber == b.OrderNumber, JoinMode.LEFT, false)
                         .Top(10)
                         .OrderBy("")
-                        .ToList();
+                        .Page(1, 10);
 
                     repository.ChangeDataBase("master");
 
@@ -94,7 +98,7 @@ namespace Kogel.Dapper.Extension.Test.UnitTest.Mysql
                 var tupleList = divReposirory.QuerySet()
                          .ToListAsync(x => new
                          {
-                             Id = x.Id, 
+                             Id = x.Id,
                              dateTime = x.DeliveredReceiveTime
                          }).Result;
 

@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 using System.Linq;
 using System.Data.SqlClient;
 using Kogel.Dapper.Extension.MsSql;
-using Kogel.Dapper.Extension.Model;
+using Kogel.Dapper.Extension.Entites;
 using System.Collections.Concurrent;
 
 namespace Kogel.Dapper.Extension.Test
@@ -19,8 +19,8 @@ namespace Kogel.Dapper.Extension.Test
         static void Main(string[] args)
         {
             #region mssql单元测试
-            //var mssqlQuery = new UnitTest.Mssql.Query();
-            //mssqlQuery.Test();
+            var mssqlQuery = new UnitTest.Mssql.Query();
+            mssqlQuery.Test();
 
             //var mssqlCommand = new UnitTest.Mssql.Command();
             //mssqlCommand.Test();
@@ -30,8 +30,8 @@ namespace Kogel.Dapper.Extension.Test
             //var mysqlQuery = new UnitTest.Mysql.Query();
             //mysqlQuery.Test();
 
-            var mysqlCommand = new UnitTest.Mysql.Command();
-            mysqlCommand.Test();
+            //var mysqlCommand = new UnitTest.Mysql.Command();
+            //mysqlCommand.Test();
             #endregion
 
             //stopwatch.Stop();

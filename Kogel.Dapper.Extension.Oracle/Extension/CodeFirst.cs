@@ -1,9 +1,9 @@
 ﻿using Kogel.Dapper.Extension.Core.Interfaces;
-using Kogel.Dapper.Extension.Model;
+using Kogel.Dapper.Extension.Entites;
 using System;
 using System.Data;
 using System.Text;
-using Dapper;
+using Kogel.Dapper.Extension;
 
 namespace Kogel.Dapper.Extension.Oracle.Extension
 {
